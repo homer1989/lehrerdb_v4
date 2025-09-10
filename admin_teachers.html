@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Lehrer verwalten{% endblock %}
+
+{% block content %}
+    <h1>Lehrer verwalten</h1>
+
+    <details>
+        <summary>Neuen Lehrer anlegen</summary>
+        <form method="post" action="/admin/teacher/create">
+            <div class="grid">
+                <label for="short">Kürzel
+                    <input name="short" id="short" required size="5"/>
+                </label>
+                <label for="name">Name
+                    <input name="name" id="name" required/>
+                </label>
+            </div>
+            <button type="submit">Anlegen</button>
+        </form>
+    </details>
+
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Kürzel</th>
+                    <th>Name</th>
+                    <th>Aktion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in teachers %}
+                    <tr>
+                        <td>{{ t.id }}</td>
+                        <td>{{ t.short or '' }}</td>
+                        <td>{{ t.name or '' }}</td>
+                        <td>
+                            <form method="post" action="/admin/teacher/delete" onsubmit="return confirm('Lehrer wirklich löschen?');">
+                                <input type="hidden" name="id" value="{{ t.id }}">
+                                <button type="submit" class="secondary outline">Löschen</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+{% endblock %}

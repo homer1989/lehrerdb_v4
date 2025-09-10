@@ -1,0 +1,414 @@
+[2025-09-09 23:22:01.858001] POST /admin/timetable/delete
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 594, in do_POST
+    self._post_admin_timetable_delete()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'SchoolHTTPRequestHandler' object has no attribute '_post_admin_timetable_delete'. Did you mean: '_post_admin_timetable_create'?
+
+[2025-09-09 23:39:41.067238] GET /
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 568, in do_GET
+    self._handle_home(params)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 765, in _handle_home
+    self.render("home.html", context)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 474, in render
+    template = template_env.get_template(template_name)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\home.html", line 58, in template
+    {% continue %}
+    
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'continue'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+
+[2025-09-09 23:39:41.119831] GET /favicon.ico
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 568, in do_GET
+    self._handle_home(params)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 765, in _handle_home
+    self.render("home.html", context)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 474, in render
+    template = template_env.get_template(template_name)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\home.html", line 58, in template
+    {% continue %}
+    
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'continue'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+
+[2025-09-09 23:47:18.100307] GET /
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 568, in do_GET
+    self._handle_home(params)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 723, in _handle_home
+    if prev_row.get('day', day_name) == day_name:
+       ^^^^^^^^^^^^
+AttributeError: 'sqlite3.Row' object has no attribute 'get'
+
+[2025-09-09 23:47:18.136587] GET /favicon.ico
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 568, in do_GET
+    self._handle_home(params)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 723, in _handle_home
+    if prev_row.get('day', day_name) == day_name:
+       ^^^^^^^^^^^^
+AttributeError: 'sqlite3.Row' object has no attribute 'get'
+
+[2025-09-09 23:48:36.535791] GET /
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 568, in do_GET
+    self._handle_home(params)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 723, in _handle_home
+    if prev_row['day'] == day_name:
+       ~~~~~~~~^^^^^^^
+IndexError: No item with that key
+
+[2025-09-09 23:48:36.560777] GET /favicon.ico
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 568, in do_GET
+    self._handle_home(params)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 723, in _handle_home
+    if prev_row['day'] == day_name:
+       ~~~~~~~~^^^^^^^
+IndexError: No item with that key
+
+[2025-09-09 23:59:59.379629] GET /
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 568, in do_GET
+    self._handle_home(params)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 775, in _handle_home
+    self.render("home.html", context)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 474, in render
+    template = template_env.get_template(template_name)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\home.html", line 58, in template
+    {% continue %}
+    
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'continue'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+
+[2025-09-09 23:59:59.424487] GET /favicon.ico
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 568, in do_GET
+    self._handle_home(params)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 775, in _handle_home
+    self.render("home.html", context)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 474, in render
+    template = template_env.get_template(template_name)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\home.html", line 58, in template
+    {% continue %}
+    
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'continue'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+
+[2025-09-10 00:01:22.505193] GET /
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 568, in do_GET
+    self._handle_home(params)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 775, in _handle_home
+    self.render("home.html", context)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 474, in render
+    template = template_env.get_template(template_name)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\home.html", line 82, in template
+    {% endfor %}
+    
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endfor'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'endif'. The innermost block that needs to be closed is 'if'.
+
+[2025-09-10 00:01:22.556672] GET /favicon.ico
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 568, in do_GET
+    self._handle_home(params)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 775, in _handle_home
+    self.render("home.html", context)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 474, in render
+    template = template_env.get_template(template_name)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\home.html", line 82, in template
+    {% endfor %}
+    
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endfor'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'endif'. The innermost block that needs to be closed is 'if'.
+
+[2025-09-10 00:03:13.003874] GET /
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 568, in do_GET
+    self._handle_home(params)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 775, in _handle_home
+    self.render("home.html", context)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 475, in render
+    html = template.render(context)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\home.html", line 2, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\base.html", line 32, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\home.html", line 47, in block 'content'
+    {% for slot_idx, slot in enumerate(schedule_pattern) %}
+    ^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'enumerate' is undefined
+
+[2025-09-10 00:03:13.052466] GET /favicon.ico
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 568, in do_GET
+    self._handle_home(params)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 775, in _handle_home
+    self.render("home.html", context)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 475, in render
+    html = template.render(context)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\home.html", line 2, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\base.html", line 32, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\home.html", line 47, in block 'content'
+    {% for slot_idx, slot in enumerate(schedule_pattern) %}
+    ^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'enumerate' is undefined
+
+[2025-09-10 00:04:14.061596] GET /
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 568, in do_GET
+    self._handle_home(params)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 775, in _handle_home
+    self.render("home.html", context)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 475, in render
+    html = template.render(context)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\home.html", line 2, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\base.html", line 32, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\home.html", line 69, in block 'content'
+    {% set __ = skip.update({(slot_idx + 1, day_idx): True}) %}
+    
+jinja2.exceptions.UndefinedError: 'slot_idx' is undefined
+
+[2025-09-10 00:04:14.102811] GET /favicon.ico
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 568, in do_GET
+    self._handle_home(params)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 775, in _handle_home
+    self.render("home.html", context)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 475, in render
+    html = template.render(context)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\home.html", line 2, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\base.html", line 32, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\home.html", line 69, in block 'content'
+    {% set __ = skip.update({(slot_idx + 1, day_idx): True}) %}
+    
+jinja2.exceptions.UndefinedError: 'slot_idx' is undefined
+
+[2025-09-10 00:22:50.852938] GET /performance?id=1
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 554, in do_GET
+    self._handle_performance_detail(params)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 2037, in _handle_performance_detail
+    if class_id and class_id.isdigit():
+       ^^^^^^^^
+NameError: name 'class_id' is not defined. Did you mean: 'classes'?
+
+[2025-09-10 00:23:17.060004] GET /performance?id=1
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 554, in do_GET
+    self._handle_performance_detail(params)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 2024, in _handle_performance_detail
+    self.render("performance_detail.html", context)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 475, in render
+    html = template.render(context)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\performance_detail.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\base.html", line 32, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\performance_detail.html", line 90, in block 'content'
+    {% set final_grade = override_val if (override_val is not None) else grade %}
+    
+jinja2.exceptions.TemplateRuntimeError: No test named 'None' found.
+
+[2025-09-10 00:33:06.098961] GET /performance?id=1
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 554, in do_GET
+    self._handle_performance_detail(params)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 2024, in _handle_performance_detail
+    self.render("performance_detail.html", context)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 475, in render
+    html = template.render(context)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\performance_detail.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\base.html", line 32, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\performance_detail.html", line 90, in block 'content'
+    {% set final_grade = override_val if (override_val is not None) else grade %}
+    
+jinja2.exceptions.TemplateRuntimeError: No test named 'None' found.
+
+[2025-09-10 00:33:21.258210] GET /leistungsabfragen
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 556, in do_GET
+    self._handle_las(params)
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'SchoolHTTPRequestHandler' object has no attribute '_handle_las'. Did you mean: '_handle_classes'?
+
+[2025-09-10 00:33:26.883253] GET /leistungsabfragen
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 556, in do_GET
+    self._handle_las(params)
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'SchoolHTTPRequestHandler' object has no attribute '_handle_las'. Did you mean: '_handle_classes'?
+
+[2025-09-10 00:33:28.617938] GET /performance?id=1
+Traceback (most recent call last):
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 554, in do_GET
+    self._handle_performance_detail(params)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 2024, in _handle_performance_detail
+    self.render("performance_detail.html", context)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\webapp.py", line 475, in render
+    html = template.render(context)
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\homer\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\performance_detail.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\base.html", line 32, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^
+  File "C:\Users\homer\Documents\LehrerDB_jules\Lehrer_db_v3\templates\performance_detail.html", line 90, in block 'content'
+    {% set final_grade = override_val if (override_val is not None) else grade %}
+    
+jinja2.exceptions.TemplateRuntimeError: No test named 'None' found.
+

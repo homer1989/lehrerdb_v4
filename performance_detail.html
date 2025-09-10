@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Leistungsabfrage Details{% endblock %}
+
+{% block content %}
+    <h1>Leistungsabfrage {{ pid }}</h1>
+    <p>Typ: {{ row.type }} | Beschreibung: {{ row.description or '' }} | Datum: {{ row.date }} | Gruppe: {{ row.class_name or row.course_name or '' }} | Fach: {{ row.subject_short or row.subject_name or '' }}</p>
+
+    {% if task_count > 0 %}
+        <p><strong>Aufgaben und Max-Punkte:</strong> {{ tasks|map(attribute='max_points')|join(', ') }}</p>
+    {% else %}
+        <p><strong>Mündlich / keine Aufgaben</strong></p>
+    {% endif %}
+
+    {% if grade_scales %}
+        <form method="post" action="/performance/assign_scale">
+            <input type="hidden" name="performance_id" value="{{ pid }}">
+            <label for="scale_id">Notenschlüssel
+                <select name="scale_id" id="scale_id">
+                    <option value="0" {% if not row.grade_scale_id %}selected{% endif %}>(kein)</option>
+                    {% for sc in grade_scales %}
+                        <option value="{{ sc.id }}" {% if row.grade_scale_id and sc.id == row.grade_scale_id %}selected{% endif %}>{{ sc.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <button type="submit">Zuweisen</button>
+        </form>
+    {% endif %}
+
+    {% if curr_scale_row %}
+        <p><strong>Aktueller Notenschlüssel:</strong> {{ curr_scale_row.name }}</p>
+    {% endif %}
+
+    {% if row.class_id or row.course_id %}
+        <p><strong>Aggregierte Werte:</strong>
+        Durchschnitt: {{ "%.2f"|format(avg_points) }} Punkte, Bester: {{ "%.2f"|format(best_points) }} Punkte, Schlechtester: {{ "%.2f"|format(worst_points) }} Punkte
+        {% if most_avg_task %}, Aufgabe mit meisten Punkten: A{{ most_avg_task }} ({{ "%.2f"|format(most_avg_val) }}){% endif %}
+        {% if least_avg_task %}, Aufgabe mit wenigsten Punkten: A{{ least_avg_task }} ({{ "%.2f"|format(least_avg_val) }}){% endif %}
+        </p>
+    {% endif %}
+
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>StudentID</th>
+                    <th>Nachname</th>
+                    <th>Vorname</th>
+                    {% for i in range(1, task_count + 1) %}
+                        <th>A{{ i }}</th>
+                    {% endfor %}
+                    <th>OP</th>
+                    <th>ZP</th>
+                    {% if curr_scale_row %}
+                        <th>Punkte</th>
+                        <th>% total (0,5er)</th>
+                        <th>Note</th>
+                        <th>Override</th>
+                        <th>Kommentar</th>
+                        <th>Aktion</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in students %}
+                    <tr>
+                        <form method="post" action="/performance/update_points">
+                            <td>{{ s.id }}</td>
+                            <td>{{ s.last_name }}</td>
+                            <td>{{ s.first_name }}</td>
+                            {% for i in range(1, task_count + 1) %}
+                                <td>
+                                    <input type="number" step="0.1" min="0" name="task_{{ i }}" value="{{ results[s.id]['tasks'].get(i, '') }}" style="width:4em;">
+                                </td>
+                            {% endfor %}
+                            <td><input type="number" step="0.1" min="0" name="op" value="{{ results[s.id]['op'] }}" style="width:4em;"></td>
+                            <td><input type="number" step="0.1" min="0" name="zp" value="{{ results[s.id]['zp'] }}" style="width:4em;"></td>
+                            {% if curr_scale_row %}
+                                {% set tot = results[s.id]['tasks'].values()|sum + results[s.id]['op'] + results[s.id]['zp'] %}
+                                {% set pct = (tot / total_max * 100.0) if total_max > 0 else 0.0 %}
+                                {% set pct_rounded = (pct * 2)|round / 2.0 %}
+                                {% set grade = '' %}
+                                {% for g, mi, ma in scale_def %}
+                                    {% if pct_rounded >= mi and pct_rounded < ma %}
+                                        {% set grade = g %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% set override_val = results[s.id].get('override', None) %}
+                                {% set comment_val = results[s.id].get('comment', '') %}
+                                {% set final_grade = override_val if (override_val is not None) else grade %}
+                                <td>{{ "%.2f"|format(tot) }}</td>
+                                <td>{{ "%.1f"|format(pct_rounded) }}%</td>
+                                <td>{{ final_grade }}</td>
+                                <td><input type="text" name="override" size="4" value="{{ '' if override_val is none else override_val }}"></td>
+                                <td><input type="text" name="comment" size="18" value="{{ comment_val or '' }}"></td>
+                                <td>
+                                    <input type="hidden" name="performance_id" value="{{ pid }}">
+                                    <input type="hidden" name="student_id" value="{{ s.id }}">
+                                    <button type="submit">Speichern</button>
+                                </td>
+                            {% endif %}
+                        </form>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+
+    <p><a href="/performance/download?id={{ pid }}">CSV-Vorlage erneut herunterladen</a></p>
+    <p><a href="/leistungsabfragen">Zurück zur Leistungsabfragen-Liste</a></p>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Fächer verwalten{% endblock %}
+
+{% block content %}
+    <h1>Fächer verwalten</h1>
+
+    <details>
+        <summary>Neues Fach anlegen</summary>
+        <form method="post" action="/admin/subject/create">
+            <div class="grid">
+                <label for="name">Name
+                    <input name="name" id="name" required/>
+                </label>
+                <label for="short">Kürzel
+                    <input name="short" id="short" required size="5"/>
+                </label>
+            </div>
+            <button type="submit">Anlegen</button>
+        </form>
+    </details>
+
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Kürzel</th>
+                    <th>Aktion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in subjects %}
+                    <tr>
+                        <td>{{ s.id }}</td>
+                        <td>{{ s.name }}</td>
+                        <td>{{ s.short or '' }}</td>
+                        <td>
+                            <form method="post" action="/admin/subject/delete" onsubmit="return confirm('Fach wirklich löschen?');">
+                                <input type="hidden" name="id" value="{{ s.id }}">
+                                <button type="submit" class="secondary outline">Löschen</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+{% endblock %}

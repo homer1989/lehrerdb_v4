@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Stundenplan verwalten{% endblock %}
+
+{% block content %}
+    <h1>Stundenplan verwalten</h1>
+
+    <h2>Neuen Eintrag erstellen</h2>
+    <form action="/admin/timetable/create" method="post">
+        <div class="grid">
+            <label for="day">Tag
+                <select id="day" name="day" required>
+                    {% for day in days %}
+                    <option value="{{ day }}">{{ day }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="period">Stunde
+                <select id="period" name="period" required>
+                    {% for p in periods %}
+                    <option value="{{ p }}">{{ p }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="subject_id">Fach
+                <select id="subject_id" name="subject_id" required>
+                    {% for s in subjects %}
+                    <option value="{{ s.id }}">{{ s.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </div>
+        <div class="grid">
+            <label for="class_id">Klasse
+                <select id="class_id" name="class_id">
+                    <option value="">-</option>
+                    {% for c in classes %}
+                    <option value="{{ c.id }}">{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="course_id">Kurs
+                <select id="course_id" name="course_id">
+                    <option value="">-</option>
+                    {% for c in courses %}
+                    <option value="{{ c.id }}">{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="room">Raum
+                <input type="text" id="room" name="room">
+            </label>
+        </div>
+        <label for="is_double">
+            <input type="checkbox" id="is_double" name="is_double" value="1">
+            Doppelstunde
+        </label>
+        <button type="submit">Erstellen</button>
+    </form>
+
+    <h2>Bestehende Einträge</h2>
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th>Stunde</th>
+                    <th>Klasse/Kurs</th>
+                    <th>Fach</th>
+                    <th>Raum</th>
+                    <th>Doppelstunde</th>
+                    <th>Aktion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in entries %}
+                <tr>
+                    <td>{{ entry.day }}</td>
+                    <td>{{ entry.period }}</td>
+                    <td>{{ entry.class_name or entry.course_name or '' }}</td>
+                    <td>{{ entry.subject_name }}</td>
+                    <td>{{ entry.room or '' }}</td>
+                    <td>{{ 'Ja' if entry.is_double else 'Nein' }}</td>
+                    <td>
+                        <a href="/admin/timetable/edit?id={{ entry.id }}" role="button" class="secondary outline" style="margin-right: 5px;">Bearbeiten</a>
+                        <form action="/admin/timetable/delete" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="{{ entry.id }}">
+                            <button type="submit" class="secondary">Löschen</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+{% endblock %}

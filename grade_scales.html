@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Notenschlüssel{% endblock %}
+
+{% block content %}
+    <h1>Notenschlüssel verwalten</h1>
+
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Definition</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in scales %}
+                    <tr>
+                        <td>{{ s.id }}</td>
+                        <td>{{ s.name }}</td>
+                        <td><pre>{{ s.definition }}</pre></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+
+    <h2>Neuen Notenschlüssel anlegen</h2>
+    <form method="post" action="/grade_scale/create">
+        <label for="name">Name
+            <input name="name" id="name" required/>
+        </label>
+        <label for="definition">Definition (eine Zeile je Note, Format Note;Min%;Max%)
+            <textarea name="definition" id="definition" rows="6" placeholder="1.0;93;100.1\n1.5;86;93\n2.0;79;86\n..."></textarea>
+        </label>
+        <button type="submit">Anlegen</button>
+    </form>
+
+    <p><a href="/leistungsabfragen">Zurück zu den Leistungsabfragen</a></p>
+{% endblock %}

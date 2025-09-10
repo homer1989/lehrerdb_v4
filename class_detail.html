@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Klasse {{ cname }}{% endblock %}
+
+{% block content %}
+    <h1>Klasse {{ cname }}</h1>
+
+    <p>Schüler: {{ total_students }} | Versch. Kurse: {{ course_count_class }}</p>
+
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>Nachname</th>
+                    <th>Vorname</th>
+                    <th>Klasse</th>
+                    <th>Kurs</th>
+                    <th>Aktion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in rows %}
+                    <tr>
+                        <td><a href="/student?id={{ r.id }}">{{ r.last_name }}</a></td>
+                        <td><a href="/student?id={{ r.id }}">{{ r.first_name }}</a></td>
+                        <td>{{ r.class_name }}</td>
+                        <td>{{ r.course_name or '' }}</td>
+                        <td>
+                            <form method="post" action="/enroll/update">
+                                <input type="hidden" name="student_id" value="{{ r.id }}">
+                                <input type="hidden" name="next" value="/class?id={{ class_id }}">
+                                <select name="class_id">
+                                    {% for c in classes %}
+                                        <option value="{{ c.id }}" {% if c.id == r.class_id %}selected{% endif %}>{{ c.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <select name="course_id">
+                                    <option value="0">(kein Kurs)</option>
+                                    {% for c in courses %}
+                                        <option value="{{ c.id }}" {% if r.course_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="secondary">Speichern</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+{% endblock %}

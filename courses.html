@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Kurse{% endblock %}
+
+{% block content %}
+    <h1>Kurse</h1>
+    <p><strong>Aggregiert:</strong> Klassen: {{ total_classes }}, Kurse: {{ total_courses }}, Schüler: {{ total_students }}</p>
+
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th><a href="{{ sort_links.id }}">ID</a></th>
+                    <th><a href="{{ sort_links.name }}">Kurs</a></th>
+                    <th>Kursleitung</th>
+                    <th><a href="{{ sort_links.size }}">#Schüler</a></th>
+                    <th><a href="{{ sort_links.avg }}">&Oslash; Gesamtnote</a></th>
+                    <th><a href="{{ sort_links.fehl }}">Fehlstunden</a></th>
+                    <th><a href="{{ sort_links.late }}">Verspätungs-Min</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in data %}
+                    <tr>
+                        <td>{{ d.id }}</td>
+                        <td><a href="/course?id={{ d.id }}">{{ d.name }}</a></td>
+                        <td>{{ d.leader_short or 'n.z.' }}</td>
+                        <td>{{ d.student_count }}</td>
+                        <td>{{ "%.2f"|format(d.avg_grade) if d.avg_grade is not none else "-" }}</td>
+                        <td>{{ "%.1f"|format(d.fehlstunden) }}</td>
+                        <td>{{ d.verspaetung_min }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Änderungsprotokoll{% endblock %}
+
+{% block content %}
+    <h1>Änderungsprotokoll</h1>
+
+    <form method="get" action="/admin/log">
+        <label for="action">Aktion
+            <select name="action" id="action" onchange="this.form.submit()">
+                <option value="">alle</option>
+                {% for act in actions %}
+                    <option value="{{ act }}" {% if action_filter == act %}selected{% endif %}>{{ act }}</option>
+                {% endfor %}
+            </select>
+        </label>
+    </form>
+
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Zeit</th>
+                    <th>Aktion</th>
+                    <th>Tabelle</th>
+                    <th>RecordID</th>
+                    <th>Feld</th>
+                    <th>Alt</th>
+                    <th>Neu</th>
+                    <th>Kommentar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                    <tr>
+                        <td>{{ log.id }}</td>
+                        <td>{{ log.timestamp }}</td>
+                        <td>{{ log.action }}</td>
+                        <td>{{ log.table_name or '' }}</td>
+                        <td>{{ log.record_id or '' }}</td>
+                        <td>{{ log.field_name or '' }}</td>
+                        <td>{{ log.old_value or '' }}</td>
+                        <td>{{ log.new_value or '' }}</td>
+                        <td>{{ log.comment or '' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+
+    <p><a href="/admin">Zurück zum Adminbereich</a></p>
+{% endblock %}

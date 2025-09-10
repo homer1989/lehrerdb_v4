@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Schüler: {{ srow.first_name }} {{ srow.last_name }}{% endblock %}
+
+{% block content %}
+    <h1>Schüler: {{ srow.first_name }} {{ srow.last_name }}</h1>
+    {% if msg %}
+        <p style="color:green">{{ msg }}</p>
+    {% endif %}
+    <p>
+        Klasse: <a href="/class?id={{ srow.class_id }}">{{ srow.class_name }}</a> |
+        Kurs: {% if srow.course_id %}<a href="/course?id={{ srow.course_id }}">{{ srow.course_name }}</a>{% else %}n.a.{% endif %}
+    </p>
+
+    <article>
+        <header>Statistiken</header>
+        <p>
+            Anwesenheits-Einträge: {{ total_attendance }} (Anwesend: {{ total_present }}, Abwesend: {{ total_absent }}, Fehlzeit: {{ fehlstunden|round(1) }} Std, Verspätung: {{ total_late_minutes }} Min)
+        </p>
+        <p>
+            Noten-Einträge: {{ total_grades }} (Leistungsabfragen: {{ perf_count }} | Ø: {{ "%.2f"|format(perf_avg) if perf_count else "-" }}, SoMi Noten: {{ spont_count }} | Ø: {{ "%.2f"|format(spont_avg) if spont_count else "-" }})
+        </p>
+    </article>
+
+    <details>
+        <summary>Stammdaten bearbeiten</summary>
+        <form method="post" action="/student/save">
+            <input type="hidden" name="id" value="{{ srow.id }}">
+            <div class="grid">
+                <label for="first_name">Vorname
+                    <input type="text" name="first_name" id="first_name" value="{{ srow.first_name }}" required/>
+                </label>
+                <label for="last_name">Nachname
+                    <input type="text" name="last_name" id="last_name" value="{{ srow.last_name }}" required/>
+                </label>
+            </div>
+            <div class="grid">
+                <label for="class_id">Klasse
+                    <select name="class_id" id="class_id">
+                        {% for c in classes %}
+                            <option value="{{ c.id }}" {% if c.id == srow.class_id %}selected{% endif %}>{{ c.name }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label for="class_name_new">oder neue Klasse
+                    <input type="text" name="class_name_new" id="class_name_new" placeholder="z.B. 8b"/>
+                </label>
+            </div>
+            <div class="grid">
+                <label for="course_id">Kurs
+                    <select name="course_id" id="course_id">
+                        <option value="0">(kein Kurs)</option>
+                        {% for c in courses %}
+                            <option value="{{ c.id }}" {% if c.id == srow.course_id %}selected{% endif %}>{{ c.name }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label for="course_name_new">oder neuer Kurs
+                    <input type="text" name="course_name_new" id="course_name_new" placeholder="z.B. 8ph"/>
+                </label>
+            </div>
+            <button type="submit">Speichern</button>
+        </form>
+    </details>
+
+    <form method="get">
+        <input type="hidden" name="id" value="{{ student_id }}">
+        <label for="filter">Filter:
+            <select name="filter" id="filter" onchange="this.form.submit()">
+                <option value="" {% if filter_type == "" %}selected{% endif %}>Alle</option>
+                <option value="attendance" {% if filter_type == "attendance" %}selected{% endif %}>Anwesenheiten</option>
+                <option value="present" {% if filter_type == "present" %}selected{% endif %}>Nur Anwesenheiten</option>
+                <option value="absent" {% if filter_type == "absent" %}selected{% endif %}>Nur Fehlzeiten</option>
+                <option value="grades" {% if filter_type == "grades" %}selected{% endif %}>Noten</option>
+                <option value="performance" {% if filter_type == "performance" %}selected{% endif %}>Leistungsabfragen</option>
+                <option value="spontaneous" {% if filter_type == "spontaneous" %}selected{% endif %}>SoMi Noten</option>
+            </select>
+        </label>
+    </form>
+
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>Datum</th>
+                    <th>Stunde</th>
+                    <th>Typ</th>
+                    <th>Beschreibung</th>
+                    <th>Wert</th>
+                    <th>Kommentar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in recs %}
+                    <tr>
+                        <td>{{ r.date }}</td>
+                        <td>{{ r.period or '' }}</td>
+                        {% if r.kind == 'attendance' %}
+                            <td>Anwesenheit</td>
+                            <td>{{ "anwesend" if r.status == "present" else "abwesend" }}</td>
+                            <td>
+                                {% if r.status == 'present' and r.late_minutes > 0 %}
+                                    +{{ r.late_minutes }} Min zu spät
+                                {% elif r.status == 'absent' %}
+                                    {{ r.absent_minutes }} Min fehlend
+                                {% endif %}
+                            </td>
+                            <td></td>
+                        {% else %}
+                            <td>{{ "Leistungsabfrage" if r.type == "performance" else "SoMi Note" }}</td>
+                            <td>{{ r.subject or '' }}</td>
+                            <td>{{ "%.2f"|format(r.grade) if r.grade is not none else "" }}</td>
+                            <td>{{ r.comment or '' }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+
+    <details>
+        <summary>Neue Anwesenheit eintragen</summary>
+        <form method="post" action="/attendance/create">
+            <input type="hidden" name="student_id" value="{{ student_id }}">
+            <div class="grid">
+                <label for="date">Datum
+                    <input name="date" id="date" value="{{ today_str }}" required/>
+                </label>
+                <label for="status">Status
+                    <select name="status" id="status">
+                        <option value="present">anwesend</option>
+                        <option value="absent">abwesend</option>
+                        <option value="late">verspätet</option>
+                    </select>
+                </label>
+            </div>
+            <div class="grid">
+                <label for="absent_units">Fehlstunden (Anzahl)
+                    <input type="number" name="absent_units" id="absent_units" min="0" step="1" value="0"/>
+                </label>
+                <label for="absent_minutes">Fehlzeit-Minuten (direkt)
+                    <input type="number" name="absent_minutes" id="absent_minutes" min="0" value="0"/>
+                </label>
+                <label for="late_minutes">Verspätung-Minuten
+                    <input type="number" name="late_minutes" id="late_minutes" min="0" value="0"/>
+                </label>
+            </div>
+            <button type="submit">Speichern</button>
+        </form>
+    </details>
+{% endblock %}

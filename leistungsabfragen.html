@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Leistungsabfragen{% endblock %}
+
+{% block content %}
+    <h1>Leistungsabfragen</h1>
+
+    <form method="get" action="/leistungsabfragen">
+        <div class="grid">
+            <label for="class_id">Klasse
+                <select name="class_id" id="class_id">
+                    <option value="">alle</option>
+                    {% for c in classes %}
+                        <option value="{{ c.id }}" {% if class_id and c.id == class_id|int %}selected{% endif %}>{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="course_id">Kurs
+                <select name="course_id" id="course_id">
+                    <option value="">alle</option>
+                    {% for d in courses %}
+                        <option value="{{ d.id }}" {% if course_id and d.id == course_id|int %}selected{% endif %}>{{ d.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="type">Art
+                <select name="type" id="type">
+                    <option value="">alle</option>
+                    {% for t in ["Klassenarbeit","Kursarbeit","Test","Projekt","Präsentation","Mündlich","Stundennote","Andere"] %}
+                        <option value="{{ t }}" {% if type_filter == t %}selected{% endif %}>{{ t }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </div>
+        <button type="submit">Filtern</button>
+    </form>
+
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Datum</th>
+                    <th>Art</th>
+                    <th>Beschreibung</th>
+                    <th>Gruppe</th>
+                    <th>Fach</th>
+                    <th>Note&nbsp;Schlüssel</th>
+                    <th>Ø Note</th>
+                    <th>Aktion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in rows %}
+                    <tr>
+                        <td>{{ r.id }}</td>
+                        <td>{{ r.date }}</td>
+                        <td>{{ r.type }}</td>
+                        <td>{{ r.description or '' }}</td>
+                        <td>{{ r.class_name or r.course_name or '' }}</td>
+                        <td>{{ r.subject_short or r.subject_name or '' }}</td>
+                        <td>{{ r.grade_scale_id or '' }}</td>
+                        <td>{{ "%.2f"|format(r.avg_grade) if r.avg_grade is not none else "-" }}</td>
+                        <td>
+                            <a href="/performance?id={{ r.id }}" role="button" style="margin-bottom: 0;">Anzeigen</a>
+                            <form method="post" action="/performance/delete" style="display:inline" onsubmit="return confirm('Diese LA wirklich löschen?');">
+                                <input type="hidden" name="id" value="{{ r.id }}">
+                                <button type="submit" class="secondary outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; margin-bottom: 0;">Löschen</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+
+    <p><a href="/export_import">Zur Export/Import-Seite</a></p>
+{% endblock %}

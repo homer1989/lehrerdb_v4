@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}Daten erfassen: {{ group_name }}{% endblock %}
+
+{% block content %}
+    <h1>Daten erfassen für {{ group_name }}</h1>
+    <h2>{{ subject_name }} am {{ date }}, Stunde {{ period }}</h2>
+
+    {% if timetable_entry and timetable_entry.status == 'cancelled' and timetable_entry.date %}
+        <form method="post" action="/lesson/uncancel" style="padding-bottom: 1rem; border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 1rem;">
+            <input type="hidden" name="timetable_id" value="{{ timetable_entry.id }}">
+            <button type="submit" class="contrast">Ausfall rückgängig machen</button>
+        </form>
+    {% else %}
+        <form method="post" action="/lesson/update_status" style="padding-bottom: 1rem; border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 1rem;">
+            <input type="hidden" name="date" value="{{ date }}">
+            <input type="hidden" name="period" value="{{ period }}">
+            <input type="hidden" name="subject_id" value="{{ subject_id }}">
+            {% if class_id %}<input type="hidden" name="class_id" value="{{ class_id }}">{% endif %}
+            {% if course_id %}<input type="hidden" name="course_id" value="{{ course_id }}">{% endif %}
+            <input type="hidden" name="timetable_id" value="{{ timetable_id }}">
+            <input type="hidden" name="status" value="cancelled">
+        <button type="button" id="cancel-lesson-btn" class="secondary">Stunde entfällt</button>
+        </form>
+    {% endif %}
+
+    <form method="post" action="/capture_data/save">
+        <input type="hidden" name="date" value="{{ date }}">
+        <input type="hidden" name="period" value="{{ period }}">
+        <input type="hidden" name="subject_id" value="{{ subject_id }}">
+        {% if class_id %}
+            <input type="hidden" name="class_id" value="{{ class_id }}">
+        {% endif %}
+        {% if course_id %}
+            <input type="hidden" name="course_id" value="{{ course_id }}">
+        {% endif %}
+
+        <figure>
+            <table role="grid">
+                <thead>
+                    <tr>
+                        <th>Nachname</th>
+                        <th>Vorname</th>
+                        <th>Anwesenheit</th>
+                        <th>SoMi Note</th>
+                        <th>Kommentar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                        <tr>
+                            <td><a href="/student?id={{ student.id }}">{{ student.last_name }}</a></td>
+                            <td><a href="/student?id={{ student.id }}">{{ student.first_name }}</a></td>
+                            <td>
+                                {% set current_status = existing_attendance.get(student.id, {}).status or 'present' %}
+                                {% set late_minutes = existing_attendance.get(student.id, {}).late_minutes or 0 %}
+                                {% set current_value = 'present' %}
+                                {% if current_status == 'absent' %}
+                                    {% set current_value = 'absent' %}
+                                {% elif current_status == 'late' %}
+                                    {% set current_value = 'late_' ~ late_minutes %}
+                                {% endif %}
+
+                                <input type="hidden" name="attendance_{{ student.id }}" id="attendance-input-{{ student.id }}" value="{{ current_value }}">
+
+                                <span class="attendance-icon" data-student-id="{{ student.id }}" data-status="present" style="cursor: pointer; padding: 5px; border-radius: 5px; {% if current_status == 'present' %}background-color: #4CAF50;{% endif %}">✅</span>
+                                <span class="attendance-icon" data-student-id="{{ student.id }}" data-status="absent" style="cursor: pointer; padding: 5px; border-radius: 5px; {% if current_status == 'absent' %}background-color: #f44336;{% endif %}">❌</span>
+                                <span class="attendance-icon" data-student-id="{{ student.id }}" data-status="late" style="cursor: pointer; padding: 5px; border-radius: 5px; {% if current_status == 'late' %}background-color: #ff9800;{% endif %}">
+                                    🕒
+                                    {% if current_status == 'late' and late_minutes > 0 %}
+                                        <small>({{ late_minutes }}m)</small>
+                                    {% endif %}
+                                </span>
+                            </td>
+                            <td>
+                                <select name="grade_{{ student.id }}">
+                                    <option value="">-</option>
+                                    {% for g in range(1, 7) %}
+                                        <option value="{{ g }}" {% if existing_grades.get(student.id, {}).grade|string == g|string %}selected{% endif %}>{{ g }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                <textarea name="comment_{{ student.id }}" rows="1" cols="30">{{ existing_grades.get(student.id, {}).comment or '' }}</textarea>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </figure>
+        <button type="submit">Speichern</button>
+    </form>
+
+    <dialog id="cancel-dialog">
+        <p>Soll die Stunde komplett entfallen oder ist es eine Vertretung?</p>
+        <footer class="grid">
+            <button id="cancel-complete" class="secondary">Komplettentfall</button>
+            <button id="cancel-substitute">Vertretung</button>
+        </footer>
+    </dialog>
+
+    <dialog id="late-dialog">
+        <form method="dialog">
+            <p>Verspätung in Minuten:</p>
+            <select id="late-minutes-select" name="minutes">
+                {% for i in range(5, 91, 5) %}
+                    <option value="{{ i }}">{{ i }} Minuten</option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <button type="submit" id="late-dialog-ok">OK</button>
+            <button type="button" onclick="document.getElementById('late-dialog').close()">Abbrechen</button>
+        </form>
+    </dialog>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Late dialog
+        const dialog = document.getElementById('late-dialog');
+        const lateSelect = document.getElementById('late-minutes-select');
+        const okButton = document.getElementById('late-dialog-ok');
+        let currentStudentId = null;
+
+        // Cancel dialog
+        const cancelDialog = document.getElementById('cancel-dialog');
+        const cancelLessonBtn = document.getElementById('cancel-lesson-btn');
+        const cancelCompleteBtn = document.getElementById('cancel-complete');
+        const cancelSubstituteBtn = document.getElementById('cancel-substitute');
+        const cancelForm = document.querySelector('form[action="/lesson/update_status"]');
+
+        if(cancelLessonBtn) {
+            cancelLessonBtn.addEventListener('click', () => {
+                if(cancelDialog) cancelDialog.showModal();
+            });
+        }
+        if(cancelCompleteBtn) {
+            cancelCompleteBtn.addEventListener('click', () => {
+                if(cancelForm) cancelForm.submit();
+            });
+        }
+        if(cancelSubstituteBtn) {
+            cancelSubstituteBtn.addEventListener('click', () => {
+                alert('Die Vertretungs-Funktion ist noch nicht implementiert.');
+                if(cancelDialog) cancelDialog.close();
+            });
+        }
+
+        document.querySelectorAll('.attendance-icon').forEach(icon => {
+            icon.addEventListener('click', (event) => {
+                const targetIcon = event.currentTarget;
+                currentStudentId = targetIcon.dataset.studentId;
+                const status = targetIcon.dataset.status;
+                const input = document.getElementById(`attendance-input-${currentStudentId}`);
+
+                // Reset styles for all icons of this student
+                document.querySelectorAll(`.attendance-icon[data-student-id="${currentStudentId}"]`).forEach(i => {
+                    i.style.backgroundColor = '';
+                    // Remove minute display from late icon
+                    const small = i.querySelector('small');
+                    if (small) small.remove();
+                });
+
+                targetIcon.style.backgroundColor =
+                    status === 'present' ? '#4CAF50' :
+                    status === 'absent' ? '#f44336' :
+                    '#ff9800';
+
+                if (status === 'present' || status === 'absent') {
+                    input.value = status;
+                } else if (status === 'late') {
+                    dialog.showModal();
+                }
+            });
+        });
+
+        okButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent form submission
+            if (currentStudentId) {
+                const minutes = lateSelect.value;
+                const input = document.getElementById(`attendance-input-${currentStudentId}`);
+                input.value = `late_${minutes}`;
+
+                const lateIcon = document.querySelector(`.attendance-icon[data-student-id="${currentStudentId}"][data-status="late"]`);
+
+                // Add minute display
+                const small = document.createElement('small');
+                small.textContent = ` (${minutes}m)`;
+                lateIcon.appendChild(small);
+            }
+            dialog.close();
+        });
+    });
+    </script>
+{% endblock %}

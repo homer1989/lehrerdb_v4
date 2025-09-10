@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="de" data-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+    <style>
+      table[role="grid"] th,
+      table[role="grid"] td {
+        border: 1px solid var(--pico-muted-border-color, #dcdcdc);
+      }
+    </style>
+    <title>{% block title %}{% endblock %} - LehrerDB</title>
+  </head>
+  <body>
+    <main class="container">
+        <nav>
+            <ul>
+                <li><a href="/">Stundenplan</a></li>
+                <li><a href="/classes">Klassen</a></li>
+                <li><a href="/courses">Kurse</a></li>
+                <li><a href="/students">Schüler</a></li>
+            </ul>
+            <ul>
+                <li><a href="/admin">Admin</a></li>
+                <li><a href="/export_import">Export/Import</a></li>
+                <li><a href="/leistungsabfragen">Leistungsabfragen</a></li>
+                <li><a href="/grade_scales">Notenschlüssel</a></li>
+            </ul>
+        </nav>
+
+        {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

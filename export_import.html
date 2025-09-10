@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Export/Import Leistungsabfragen{% endblock %}
+
+{% block content %}
+    <h1>Leistungsabfragen</h1>
+
+    <h2>Bereits vorhandene Abfragen</h2>
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Datum</th>
+                    <th>Art</th>
+                    <th>Beschreibung</th>
+                    <th>Klasse/Kurs</th>
+                    <th>Fach</th>
+                    <th>Aktion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in perf_rows %}
+                    <tr>
+                        <td>{{ r.id }}</td>
+                        <td>{{ r.date }}</td>
+                        <td>{{ r.type }}</td>
+                        <td>{{ r.description or '' }}</td>
+                        <td>{{ r.class_name or r.course_name or '' }}</td>
+                        <td>{{ r.subject_short or r.subject_name or '' }}</td>
+                        <td>
+                            <a href="/performance?id={{ r.id }}">Anzeigen</a>
+                            <form method="post" action="/performance/delete" style="display:inline" onsubmit="return confirm('Diese LA wirklich löschen?');">
+                                <input type="hidden" name="id" value="{{ r.id }}">
+                                <button type="submit" class="secondary outline">Löschen</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+
+    <h2>Neue Leistungsabfrage erstellen</h2>
+    <form method="post" action="/performance/create">
+        <div class="grid">
+            <label for="type">Art
+                <select name="type" id="type">
+                    {% for t in ["Klassenarbeit","Kursarbeit","Test","Projekt","Präsentation","Mündlich","Stundennote","Andere"] %}
+                        <option value="{{ t }}">{{ t }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="description">Beschreibung
+                <input name="description" id="description"/>
+            </label>
+            <label for="date">Datum
+                <input name="date" id="date" placeholder="YYYY-MM-DD" required/>
+            </label>
+        </div>
+        <div class="grid">
+            <label for="subject_id">Fach
+                <select name="subject_id" id="subject_id">
+                    <option value="0">(kein Fach)</option>
+                    {% for s in subjects %}
+                        <option value="{{ s.id }}">{{ s.short or s.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="class_id">Klasse
+                <select name="class_id" id="class_id">
+                    <option value="0">(keine)</option>
+                    {% for c in classes %}
+                        <option value="{{ c.id }}">{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="course_id">Kurs
+                <select name="course_id" id="course_id">
+                    <option value="0">(keiner)</option>
+                    {% for d in courses %}
+                        <option value="{{ d.id }}">{{ d.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </div>
+        <div class="grid">
+            <label for="task_count">Anzahl Aufgaben (0 für mündlich)
+                <input type="number" name="task_count" id="task_count" min="0" value="0"/>
+            </label>
+            <label for="max_points">Max-Punkte je Aufgabe (kommagetrennt)
+                <input name="max_points" id="max_points" placeholder="z.B. 10,5,5"/>
+            </label>
+            <label for="max_op_points">Max Ordnungspunkte (OP)
+                <input type="number" name="max_op_points" id="max_op_points" min="0" value="0"/>
+            </label>
+        </div>
+        <button type="submit">Abfrage erstellen & CSV herunterladen</button>
+    </form>
+
+    <h2>Ergebnisse importieren</h2>
+    <form method="post" action="/performance/import">
+        <label for="performance_id">Abfrage-ID
+            <select name="performance_id" id="performance_id">
+                {% for r in perf_rows %}
+                    <option value="{{ r.id }}">{{ r.id }}: {{ r.type }} {{ r.description or '' }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label for="csv_data">CSV-Daten einfügen
+            <textarea name="csv_data" id="csv_data" rows="10"></textarea>
+        </label>
+        <button type="submit">Importieren</button>
+    </form>
+{% endblock %}

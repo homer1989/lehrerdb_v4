@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Kurse verwalten{% endblock %}
+
+{% block content %}
+    <h1>Kurse verwalten</h1>
+
+    <details>
+        <summary>Neuen Kurs anlegen</summary>
+        <form method="post" action="/admin/course/create">
+            <div class="grid">
+                <label for="course_name">Kursname
+                    <input type="text" name="course_name" id="course_name" placeholder="z.B. 8PH" required/>
+                </label>
+                <label for="leader_id">Kursleitung
+                    <select name="leader_id" id="leader_id">
+                        <option value="0">(keine)</option>
+                        {% for t in teachers %}
+                            <option value="{{ t.id }}">{{ t.short }}{% if t.name %} ({{ t.name }}){% endif %}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+            <div class="grid">
+                <label for="new_teacher_short">oder neu: Kürzel
+                    <input type="text" name="new_teacher_short" id="new_teacher_short" size="5"/>
+                </label>
+                <label for="new_teacher_name">Name
+                    <input type="text" name="new_teacher_name" id="new_teacher_name" size="15"/>
+                </label>
+            </div>
+            <button type="submit">Anlegen</button>
+        </form>
+    </details>
+
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Leitung</th>
+                    <th>Klassen</th>
+                    <th>#Schüler</th>
+                    <th>Aktion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in courses %}
+                    <tr>
+                        <td>{{ r.id }}</td>
+                        <td>{{ r.name }}</td>
+                        <td>
+                            {% if r.leader_short %}
+                                <strong>{{ r.leader_short }}</strong> {{ r.leader_name or '' }}
+                            {% else %}
+                                <strong>n.z.</strong>
+                            {% endif %}
+                        </td>
+                        <td>{{ r.classes_in_course }}</td>
+                        <td>{{ r.student_count }}</td>
+                        <td>
+                            <form method="post" action="/admin/course/delete" onsubmit="return confirm('Kurs wirklich löschen?');">
+                                <input type="hidden" name="id" value="{{ r.id }}">
+                                <button type="submit" class="secondary outline">Löschen</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+{% endblock %}

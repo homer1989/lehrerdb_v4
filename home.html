@@ -1,0 +1,125 @@
+
+{% extends "base.html" %}
+
+{% block title %}Stundenplan{% endblock %}
+
+{% block content %}
+<h1>Stundenplan KW {{ kw }}, SW {{ sw }}</h1>
+
+<style>
+@media (max-width: 700px) {
+    .plan-table { display: none; }
+    .plan-cards { display: block; }
+}
+@media (min-width: 701px) {
+    .plan-table { display: table; }
+    .plan-cards { display: none; }
+}
+.plan-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 1em;
+    padding: 0.7em 1em;
+    background: #fff;
+    box-shadow: 0 2px 6px #eee;
+}
+.plan-card .period { font-weight: bold; color: #555; }
+.plan-card .label { font-size: 1.1em; margin-top: 0.2em; }
+.plan-card .room { color: #888; font-size: 0.95em; }
+.plan-card .cancelled { text-decoration: line-through; color: #b00; }
+</style>
+
+<div class="plan-table">
+        <figure>
+                <table role="grid" style="table-layout: fixed; width: 100%;">
+                        <thead>
+                                <tr>
+                                        <th scope="col">KW {{ kw }}<br>SW {{ sw }}</th>
+                                                                {% for day in day_labels %}
+                                                                        <th scope="col" {% if loop.index0 == current_day_idx %}style="background-color: #f2f2f2; color: #222;"{% endif %}>
+                                                                                {{ day }}<br>{{ dates[loop.index0].strftime('%d.%m.') }}
+                                                                        </th>
+                                                                {% endfor %}
+                                </tr>
+                        </thead>
+                        <tbody>
+                        {% set skip = {} %}
+                        {% for slot in schedule_pattern %}
+                                <tr>
+                                        <th scope="row">{{ slot.label }}</th>
+                                        {% if 'break' in slot %}
+                                                <td colspan="5" style="text-align: center; background-color: var(--pico-muted-background-color);">{{ slot.label }}</td>
+                                        {% else %}
+                                                {% set period = slot.period %}
+                                                {% for day_idx in range(5) %}
+                                                        {% set skip_key = (loop.index0, day_idx) %}
+                                                                                                                        {% if skip.get(skip_key) %}
+                                                                                                                                {# Zelle durch Doppelstunde belegt, keine Ausgabe #}
+                                                                                                                        {% else %}
+                                                                                                                                {% set entry = schedule_entries.get((day_idx, period)) %}
+                                                                                                                                {% if entry %}
+                                                                                                                                        {% if entry.is_double %}
+                                                                                                                                                <td rowspan="2" {% if day_idx == current_day_idx %}style="background-color: #f2f2f2; color: #222;"{% endif %}>
+                                                                                                                                                        {% if entry.status == 'cancelled' %}
+                                                                                                                                                                <s><a href="{{ entry.url }}">{{ entry.label }} - DS</a></s>
+                                                                                                                                                        {% else %}
+                                                                                                                                                                <a href="{{ entry.url }}">{{ entry.label }} - DS</a>
+                                                                                                                                                        {% endif %}
+                                                                                                                                                </td>
+                                                                                                                                                {% set __ = skip.update({(loop.index0 + 1, day_idx): True}) %}
+                                                                                                                                        {% else %}
+                                                                                                                                                <td {% if day_idx == current_day_idx %}style="background-color: #f2f2f2; color: #222;"{% endif %}>
+                                                                                                                                                        {% if entry.status == 'cancelled' %}
+                                                                                                                                                                <s><a href="{{ entry.url }}">{{ entry.label }}</a></s>
+                                                                                                                                                        {% else %}
+                                                                                                                                                                <a href="{{ entry.url }}">{{ entry.label }}</a>
+                                                                                                                                                        {% endif %}
+                                                                                                                                                </td>
+                                                                                                                                        {% endif %}
+                                                                                                                                {% else %}
+                                                                                                                                        <td></td>
+                                                                                                                                {% endif %}
+                                                                                                                        {% endif %}
+                                                {% endfor %}
+                                        {% endif %}
+                                </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+        </figure>
+</div>
+
+<div class="plan-cards">
+    {% for day_idx in range(5) %}
+        <h3 style="margin-top:2em;">{{ day_labels[day_idx] }} <span style="color:#888; font-size:0.95em;">{{ dates[day_idx].strftime('%d.%m.') }}</span></h3>
+        {% for slot in schedule_pattern %}
+            {% if 'period' in slot %}
+                {% set period = slot.period %}
+                {% set entry = schedule_entries.get((day_idx, period)) %}
+                {% if entry %}
+                    <div class="plan-card">
+                        <div class="period">{{ slot.label }}{% if entry.is_double %} <span style="font-size:0.9em; color:#0074d9;">(Doppelstunde)</span>{% endif %}</div>
+                        <div class="label {% if entry.status == 'cancelled' %}cancelled{% endif %}">
+                            <a href="{{ entry.url }}">{{ entry.label }}</a>
+                        </div>
+                        {% if entry.room %}<div class="room">Raum: {{ entry.room }}</div>{% endif %}
+                        {% if entry.status == 'cancelled' %}<div style="color:#b00; font-size:0.95em;">Ausgefallen</div>{% endif %}
+                    </div>
+                {% endif %}
+            {% endif %}
+            {% if 'break' in slot %}
+                <div style="color:#888; text-align:center; margin:0.5em 0;">{{ slot.label }}</div>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</div>
+
+<nav style="margin-top:2em;">
+    <ul>
+        <li><a href="/?week={{ week_offset - 1 }}" role="button" class="secondary">&laquo; Vorige Woche</a></li>
+    </ul>
+    <ul>
+        <li><a href="/?week={{ week_offset + 1 }}" role="button" class="secondary">N&auml;chste Woche &raquo;</a></li>
+    </ul>
+</nav>
+{% endblock %}

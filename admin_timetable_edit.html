@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Stundenplan-Eintrag bearbeiten{% endblock %}
+
+{% block content %}
+    <h1>Eintrag #{{ entry.id }} bearbeiten</h1>
+
+    <form action="/admin/timetable/update" method="post">
+        <input type="hidden" name="id" value="{{ entry.id }}">
+        <div class="grid">
+            <label for="day">Tag
+                <select id="day" name="day" required>
+                    {% for day in days %}
+                    <option value="{{ day }}" {% if day == entry.day %}selected{% endif %}>{{ day }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="period">Stunde
+                <select id="period" name="period" required>
+                    {% for p in periods %}
+                    <option value="{{ p }}" {% if p == entry.period %}selected{% endif %}>{{ p }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="subject_id">Fach
+                <select id="subject_id" name="subject_id" required>
+                    {% for s in subjects %}
+                    <option value="{{ s.id }}" {% if s.id == entry.subject_id %}selected{% endif %}>{{ s.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </div>
+        <div class="grid">
+            <label for="class_id">Klasse
+                <select id="class_id" name="class_id">
+                    <option value="">-</option>
+                    {% for c in classes %}
+                    <option value="{{ c.id }}" {% if c.id == entry.class_id %}selected{% endif %}>{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="course_id">Kurs
+                <select id="course_id" name="course_id">
+                    <option value="">-</option>
+                    {% for c in courses %}
+                    <option value="{{ c.id }}" {% if c.id == entry.course_id %}selected{% endif %}>{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="room">Raum
+                <input type="text" id="room" name="room" value="{{ entry.room or '' }}">
+            </label>
+        </div>
+        <label for="is_double">
+            <input type="checkbox" id="is_double" name="is_double" value="1" {% if entry.is_double %}checked{% endif %}>
+            Doppelstunde
+        </label>
+        <button type="submit">Speichern</button>
+        <a href="/admin/timetable" role="button" class="secondary">Abbrechen</a>
+    </form>
+{% endblock %}

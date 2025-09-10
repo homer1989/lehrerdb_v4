@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Anwesenheitsverwaltung{% endblock %}
+
+{% block content %}
+    <h1>Anwesenheitsverwaltung</h1>
+
+    <form method="get" action="/admin/attendance">
+        <div class="grid">
+            <label for="class_id">Klasse
+                <select name="class_id" id="class_id">
+                    <option value="">alle</option>
+                    {% for c in classes %}
+                        <option value="{{ c.id }}" {% if class_id and c.id == class_id|int %}selected{% endif %}>{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="course_id">Kurs
+                <select name="course_id" id="course_id">
+                    <option value="">alle</option>
+                    {% for d in courses %}
+                        <option value="{{ d.id }}" {% if course_id and d.id == course_id|int %}selected{% endif %}>{{ d.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </div>
+        <button type="submit">Filtern</button>
+    </form>
+
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Datum</th>
+                    <th>Schüler</th>
+                    <th>Klasse</th>
+                    <th>Kurs</th>
+                    <th>Status</th>
+                    <th>Fehlzeit</th>
+                    <th>Verspätung</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in rows %}
+                    <tr>
+                        <td>{{ r.id }}</td>
+                        <td>{{ r.date }}</td>
+                        <td><a href="/student?id={{ r.student_id }}">{{ r.last_name }} {{ r.first_name }}</a></td>
+                        <td>{{ r.class_name or '' }}</td>
+                        <td>{{ r.course_name or '' }}</td>
+                        <td>{{ 'verspätet' if r.status == 'present' and r.late_minutes > 0 else ('abwesend' if r.status == 'absent' else 'anwesend') }}</td>
+                        <td>{{ r.absent_minutes }} Min</td>
+                        <td>{{ r.late_minutes }} Min</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+
+    <p>Neue Anwesenheiten können im Schülerprofil eingetragen werden.</p>
+    <p><a href="/admin">Zurück zum Adminbereich</a></p>
+{% endblock %}

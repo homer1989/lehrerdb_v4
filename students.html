@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Schüler{% endblock %}
+
+{% block content %}
+    <h1>Schüler</h1>
+    <p><strong>Aggregiert:</strong> Klassen: {{ total_classes }}, Kurse: {{ total_courses }}, Schüler: {{ total_students }}</p>
+
+    <details>
+        <summary>Neuen Schüler anlegen</summary>
+        <form method="post" action="/student/create">
+            <div class="grid">
+                <label for="first_name">
+                    Vorname
+                    <input name="first_name" id="first_name" required/>
+                </label>
+                <label for="last_name">
+                    Nachname
+                    <input name="last_name" id="last_name" required/>
+                </label>
+            </div>
+            <div class="grid">
+                <label for="class_id">
+                    Klasse
+                    <select name="class_id" id="class_id" required>
+                        {% for c in classes %}
+                            <option value="{{ c.id }}">{{ c.name }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label for="course_id">
+                    Kurs
+                    <select name="course_id" id="course_id">
+                        <option value="0">(kein Kurs)</option>
+                        {% for c in courses %}
+                            <option value="{{ c.id }}">{{ c.name }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+            <button type="submit">Anlegen</button>
+        </form>
+    </details>
+
+    <form method="get" action="/students" style="margin-top: 1rem;">
+        <input type="search" id="search" name="q" placeholder="Name suchen..." value="{{ search_query or '' }}">
+        <button type="submit">Suchen</button>
+    </form>
+
+    <form method="get">
+        <div class="grid">
+            <label for="filter_class_id">
+                Klasse
+                <select name="class_id" id="filter_class_id">
+                    <option value="">Alle</option>
+                    {% for c in classes %}
+                        <option value="{{ c.id }}" {% if c.id|string == class_id %}selected{% endif %}>{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label for="filter_course_id">
+                Kurs
+                <select name="course_id" id="filter_course_id">
+                    <option value="">Alle</option>
+                    {% for c in courses %}
+                        <option value="{{ c.id }}" {% if c.id|string == course_id %}selected{% endif %}>{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </div>
+        <button type="submit">Filter</button>
+    </form>
+
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th><a href="{{ sort_links.id }}">ID</a></th>
+                    <th><a href="{{ sort_links.first }}">Vorname</a></th>
+                    <th><a href="{{ sort_links.last }}">Nachname</a></th>
+                    <th><a href="{{ sort_links.class }}">Klasse</a></th>
+                    <th><a href="{{ sort_links.course }}">Kurs</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in rows %}
+                    <tr>
+                        <td>{{ r.id }}</td>
+                        <td><a href="/student?id={{ r.id }}">{{ r.first_name }}</a></td>
+                        <td><a href="/student?id={{ r.id }}">{{ r.last_name }}</a></td>
+                        <td>{{ r.class_name }}</td>
+                        <td>{{ r.course_name or '' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+{% endblock %}

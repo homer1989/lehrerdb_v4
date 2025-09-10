@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Adminbereich{% endblock %}
+
+{% block content %}
+    <h1>Adminbereich</h1>
+    <ul>
+        <li><a href="/admin/subjects">Fächer verwalten</a></li>
+        <li><a href="/admin/teachers">Lehrer verwalten</a></li>
+        <li><a href="/admin/classes">Klassen verwalten</a></li>
+        <li><a href="/admin/courses">Kurse verwalten</a></li>
+        <li><a href="/admin/timetable">Stundenplan verwalten</a></li>
+        <li><a href="/admin/attendance">Anwesenheiten verwalten</a></li>
+        <li><a href="/admin/log">Änderungsprotokoll anzeigen</a></li>
+    </ul>
+    <p><a href="/">Home</a></p>
+{% endblock %}

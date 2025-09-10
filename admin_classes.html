@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Klassen verwalten{% endblock %}
+
+{% block content %}
+    <h1>Klassen verwalten</h1>
+
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>#Schüler</th>
+                    <th>Klassenleitung zuweisen</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in classes %}
+                    <tr>
+                        <td>{{ c.id }}</td>
+                        <td>{{ c.name }}</td>
+                        <td>{{ c.student_count }}</td>
+                        <td>
+                            <form method="post" action="/class/assign_teacher">
+                                <input type="hidden" name="class_id" value="{{ c.id }}">
+                                <select name="teacher_id">
+                                    <option value="0">(keine)</option>
+                                    {% for t in teachers %}
+                                        <option value="{{ t.id }}" {% if c.teacher_id == t.id %}selected{% endif %}>
+                                            {{ t.short }}{% if t.name %} ({{ t.name }}){% endif %}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="secondary">Speichern</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+    <p><a href="/admin">Zurück zum Adminbereich</a></p>
+{% endblock %}

@@ -1,0 +1,156 @@
+100.110.250.102 - - [10/Sep/2025 07:22:13] "GET / HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:13] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:15] "GET / HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:15] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:17] "GET / HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:17] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:18] "GET /classes HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:18] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:19] "GET /courses HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:19] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:21] "GET /classes HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:21] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:22] "GET /students HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:22] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:25] "GET / HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:25] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:43] "GET /capture_data?date=2025-09-11&period=6&subject_id=9&class_id=6&timetable_id=15 HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:43] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:22:45] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:53:14] "GET / HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:53:14] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:53:16] "GET / HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:53:16] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:53:17] "GET /students HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:53:18] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:53:25] "GET /students?q=Tim HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:53:25] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:53:44] "GET /leistungsabfragen HTTP/1.1" 500 -
+100.110.250.102 - - [10/Sep/2025 07:53:44] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:53:45] "GET /favicon.ico HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:53:47] "GET /export_import HTTP/1.1" 200 -
+100.110.250.102 - - [10/Sep/2025 07:53:47] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:04:57] "GET / HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:04:57] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:00] "GET / HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:00] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:12] "GET / HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:12] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:17] "GET / HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:18] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:18] "GET /classes HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:18] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:19] "GET /students HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:20] "GET / HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:20] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:20] "GET /favicon.ico HTTP/1.1" 500 -
+----------------------------------------
+Exception occurred during processing of request from ('100.86.84.22', 58842)
+Traceback (most recent call last):
+  File "/srv/syncthing/data/MeinKram/LehrerDB_jules/Lehrer_db_v3/webapp.py", line 568, in do_GET
+    self._handle_home(params)
+  File "/srv/syncthing/data/MeinKram/LehrerDB_jules/Lehrer_db_v3/webapp.py", line 774, in _handle_home
+    self.render("home.html", context)
+  File "/srv/syncthing/data/MeinKram/LehrerDB_jules/Lehrer_db_v3/webapp.py", line 476, in render
+    self._send_html(html)
+  File "/srv/syncthing/data/MeinKram/LehrerDB_jules/Lehrer_db_v3/webapp.py", line 485, in _send_html
+    self.wfile.write(html.encode("utf-8"))
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/socketserver.py", line 317, in _handle_request_noblock
+    self.process_request(request, client_address)
+  File "/usr/lib/python3.11/socketserver.py", line 348, in process_request
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.11/socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python3.11/socketserver.py", line 755, in __init__
+    self.handle()
+  File "/usr/lib/python3.11/http/server.py", line 432, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.11/http/server.py", line 420, in handle_one_request
+    method()
+  File "/srv/syncthing/data/MeinKram/LehrerDB_jules/Lehrer_db_v3/webapp.py", line 576, in do_GET
+    self._send_html(f"<h1>500</h1><pre>{html_escape(str(exc))}</pre>", status=500)
+  File "/srv/syncthing/data/MeinKram/LehrerDB_jules/Lehrer_db_v3/webapp.py", line 484, in _send_html
+    self.end_headers()
+  File "/usr/lib/python3.11/http/server.py", line 534, in end_headers
+    self.flush_headers()
+  File "/usr/lib/python3.11/http/server.py", line 538, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "/usr/lib/python3.11/socketserver.py", line 834, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+100.86.84.22 - - [10/Sep/2025 08:05:20] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:40] "GET / HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:40] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:45] "GET /capture_data?date=2025-09-10&period=1&subject_id=4&class_id=9&course_id=6&timetable_id=10 HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:05:45] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:06:06] "GET /courses HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:06:06] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:06:12] "GET / HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:06:12] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:06:13] "GET /capture_data?date=2025-09-10&period=1&subject_id=4&class_id=9&course_id=6&timetable_id=10 HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:06:14] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:06:17] "GET / HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:06:18] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:06:19] "GET /capture_data?date=2025-09-09&period=2&subject_id=4&class_id=7&course_id=4&timetable_id=21 HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:06:19] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:06:20] "POST /lesson/uncancel HTTP/1.1" 303 -
+100.86.84.22 - - [10/Sep/2025 08:06:20] "GET /?msg=Ausfall+wurde+rueckgaengig+gemacht. HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:06:21] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:06:22] "GET /capture_data?date=2025-09-10&period=1&subject_id=4&class_id=9&course_id=6&timetable_id=10 HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:06:22] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:10:06] "POST /capture_data/save HTTP/1.1" 303 -
+100.86.84.22 - - [10/Sep/2025 08:10:06] "GET /?msg=Daten+fuer+2025-09-10+gespeichert HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:10:06] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:10:09] "GET /capture_data?date=2025-09-10&period=1&subject_id=4&class_id=9&course_id=6&timetable_id=10 HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:10:09] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:14:21] "POST /capture_data/save HTTP/1.1" 303 -
+100.86.84.22 - - [10/Sep/2025 08:14:21] "GET /?msg=Daten+fuer+2025-09-10+gespeichert HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:14:21] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:45:14] "GET /capture_data?date=2025-09-10&period=1&subject_id=4&class_id=9&course_id=6&timetable_id=10 HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:45:14] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:51:30] "GET / HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:51:30] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:51:33] "GET /capture_data?date=2025-09-10&period=2&subject_id=4&class_id=10&course_id=7&timetable_id=11 HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 08:51:33] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 10:03:40] "GET /admin HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 10:03:41] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 10:03:43] "GET /admin/attendance HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 10:03:43] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 10:03:48] "GET / HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 10:03:48] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 10:03:55] "GET /capture_data?date=2025-09-08&period=1&subject_id=6&class_id=1&timetable_id=1 HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 10:03:55] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 10:26:55] "GET / HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 10:26:56] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 10:34:17] "GET /leistungsabfragen HTTP/1.1" 500 -
+100.86.84.22 - - [10/Sep/2025 10:34:17] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 10:34:20] "GET /favicon.ico HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:26:06] "GET /class?id=22 HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:26:07] "GET /favicon.ico HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:26:14] "GET / HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:26:14] "GET /favicon.ico HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:26:29] "GET /capture_data?date=2025-09-10&period=4&subject_id=7&class_id=8&course_id=5&timetable_id=12 HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:26:29] "GET /favicon.ico HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:28:04] "POST /capture_data/save HTTP/1.1" 303 -
+100.101.42.113 - - [10/Sep/2025 11:28:04] "GET /?msg=Daten+fuer+2025-09-10+gespeichert HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:28:04] "GET /favicon.ico HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:28:09] "GET /students HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:28:10] "GET /leistungsabfragen HTTP/1.1" 500 -
+100.101.42.113 - - [10/Sep/2025 11:28:10] "GET /favicon.ico HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:28:15] "GET /students?q=See HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:28:16] "GET /favicon.ico HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:28:24] "GET /students?q=Ece+ HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:28:25] "GET /favicon.ico HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:28:36] "GET /student?id=305 HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:28:36] "GET /student?id=305 HTTP/1.1" 200 -
+100.101.42.113 - - [10/Sep/2025 11:28:36] "GET /favicon.ico HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 20:16:24] "GET /capture_data?date=2025-09-09&period=8&subject_id=9&class_id=6&timetable_id=9 HTTP/1.1" 200 -
+100.86.84.22 - - [10/Sep/2025 20:16:24] "GET /favicon.ico HTTP/1.1" 200 -

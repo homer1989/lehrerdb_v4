@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Kurs {{ course_name }}{% endblock %}
+
+{% block content %}
+    <h1>Kurs {{ course_name }}</h1>
+    {% if class_name %}
+        <p>Verknüpft mit Klasse {{ class_name }} | Schüler im Kurs: {{ total_students_in_course }}</p>
+    {% else %}
+        <p>Schüler im Kurs: {{ total_students_in_course }}</p>
+    {% endif %}
+
+    <details>
+        <summary>Kursleitung ändern</summary>
+        <form method="post" action="/course/assign_leader">
+            <input type="hidden" name="course_id" value="{{ course_id }}">
+            <select name="leader_id">
+                <option value="0" {% if not leader_id %}selected{% endif %}>(keine)</option>
+                {% for t in teachers %}
+                    <option value="{{ t.id }}" {% if leader_id == t.id %}selected{% endif %}>
+                        {{ t.short }}{% if t.name %} ({{ t.name }}){% endif %}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Speichern</button>
+        </form>
+    </details>
+
+    <figure>
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th>Nachname</th>
+                    <th>Vorname</th>
+                    <th>Klasse</th>
+                    <th>Kurs</th>
+                    <th>Aktion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in rows %}
+                    <tr>
+                        <td><a href="/student?id={{ r.id }}">{{ r.last_name }}</a></td>
+                        <td><a href="/student?id={{ r.id }}">{{ r.first_name }}</a></td>
+                        <td>{{ r.class_name }}</td>
+                        <td>{{ course_name }}</td>
+                        <td>
+                            <form method="post" action="/enroll/update">
+                                <input type="hidden" name="student_id" value="{{ r.id }}">
+                                <input type="hidden" name="next" value="/course?id={{ course_id }}">
+                                <select name="class_id">
+                                    {% for c in classes %}
+                                        <option value="{{ c.id }}" {% if c.id == r.class_id %}selected{% endif %}>{{ c.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <select name="course_id">
+                                    <option value="0">(kein Kurs)</option>
+                                    {% for c in courses %}
+                                        <option value="{{ c.id }}" {% if r.course_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="secondary">Speichern</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </figure>
+{% endblock %}
