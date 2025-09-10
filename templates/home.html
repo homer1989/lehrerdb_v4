@@ -45,6 +45,7 @@
                         <tbody>
                         {% set skip = {} %}
                         {% for slot in schedule_pattern %}
+                                {% set slot_index = loop.index0 %}
                                 <tr>
                                         <th scope="row">{{ slot.label }}</th>
                                         {% if 'break' in slot %}
@@ -52,8 +53,8 @@
                                         {% else %}
                                                 {% set period = slot.period %}
                                                 {% for day_idx in range(5) %}
-                                                        {% set skip_key = (loop.index0, day_idx) %}
-                                                                                                                        {% if skip.get(skip_key) %}
+                                                        {% set skip_key = (slot_index, day_idx) %}
+                                                        {% if skip.get(skip_key) %}
                                                                                                                                 {# Zelle durch Doppelstunde belegt, keine Ausgabe #}
                                                                                                                         {% else %}
                                                                                                                                 {% set entry = schedule_entries.get((day_idx, period)) %}
@@ -65,8 +66,8 @@
                                                                                                                                                         {% else %}
                                                                                                                                                                 <a href="{{ entry.url }}">{{ entry.label }} - DS</a>
                                                                                                                                                         {% endif %}
-                                                                                                                                                </td>
-                                                                                                                                                {% set __ = skip.update({(loop.index0 + 1, day_idx): True}) %}
+                </td>
+                {% set __ = skip.update({(slot_index + 1, day_idx): True}) %}
                                                                                                                                         {% else %}
                                                                                                                                                 <td {% if day_idx == current_day_idx %}style="background-color: #f2f2f2; color: #222;"{% endif %}>
                                                                                                                                                         {% if entry.status == 'cancelled' %}

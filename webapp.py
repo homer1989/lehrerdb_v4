@@ -2022,9 +2022,13 @@ class SchoolHTTPRequestHandler(BaseHTTPRequestHandler):
         }
         conn.close()
         self.render("performance_detail.html", context)
+        return
+
+    def _handle_leistungsabfragen(self, params):
         class_id = params.get('class_id', [''])[0]
         course_id = params.get('course_id', [''])[0]
         type_filter = params.get('type', [''])[0]
+
         conn = get_db_connection(); cur = conn.cursor()
         classes = get_all_classes(cur)
         courses = get_all_courses(cur)
@@ -2036,34 +2040,35 @@ class SchoolHTTPRequestHandler(BaseHTTPRequestHandler):
             "LEFT JOIN courses d ON p.course_id=d.id "
             "LEFT JOIN subjects s ON p.subject_id=s.id "
         )
-        where = []; plist = []
+        where = []
+        plist = []
         if class_id and class_id.isdigit():
-            where.append("p.class_id=?"); plist.append(int(class_id))
+            where.append("p.class_id=?")
+            plist.append(int(class_id))
         if course_id and course_id.isdigit():
-            where.append("p.course_id=?"); plist.append(int(course_id))
+            where.append("p.course_id=?")
+            plist.append(int(course_id))
         if type_filter:
-            where.append("p.type LIKE ?"); plist.append(type_filter)
+            where.append("p.type LIKE ?")
+            plist.append(type_filter)
         if where:
             base += "WHERE " + " AND ".join(where) + " "
         base += "ORDER BY p.date DESC, p.id DESC"
         rows = cur.execute(base, plist).fetchall()
         conn.close()
 
-        # Augment rows with average grade
         conn_for_avg = get_db_connection()
         cur_for_avg = conn_for_avg.cursor()
-
         augmented_rows = []
         for row in rows:
             row_dict = dict(row)
             cur_for_avg.execute(
                 "SELECT AVG(grade_override) FROM performance_results WHERE performance_id = ? AND grade_override IS NOT NULL",
-                (row['id'],)
+                (row['id'],),
             )
             avg_grade = cur_for_avg.fetchone()[0]
             row_dict['avg_grade'] = avg_grade
             augmented_rows.append(row_dict)
-
         conn_for_avg.close()
 
         context = {
@@ -2075,7 +2080,6 @@ class SchoolHTTPRequestHandler(BaseHTTPRequestHandler):
             "type_filter": type_filter,
         }
         self.render("leistungsabfragen.html", context)
-
     def _handle_performance_download(self, params):
         perf_id = params.get('id', [None])[0]
         if not perf_id:
